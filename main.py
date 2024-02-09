@@ -5,7 +5,7 @@ class Windows:
         self.x, self.y, self.title, self.color = x, y, title, color
 
     def add_window(self):
-        arcade.draw_rectangle_filled(self.x,self.y,100,100,self.color)
+        arcade.draw_rectangle_filled(self.x,self.y,400,400,self.color)
 
 class DrawingApp(arcade.Window):
     def __init__(self, width, height, title):
@@ -22,7 +22,7 @@ class DrawingApp(arcade.Window):
     
     def on_mouse_press(self, x, y, button, modifiers):
         for i in self.allwindows[::-1]:
-            if (i.x-50 < x < i.x+50) and i.y-50 < y < i.y+50:
+            if (i.x-200 < x < i.x+200) and i.y-200 < y < i.y+200:
                 self.drag[1] = i
                 self.allwindows.remove(i)
                 self.allwindows.append(i)
@@ -31,6 +31,14 @@ class DrawingApp(arcade.Window):
     
     def on_mouse_release(self, x, y, button, modifiers):
         self.drag[0] = False
+        if self.drag[1].x - 200 < 0:
+            self.drag[1].x = 200
+        elif self.drag[1].x + 200 > 880:
+            self.drag[1].x = 680
+        if self.drag[1].y - 200 < 0:
+            self.drag[1].y = 200
+        elif self.drag[1].y + 200 > 587:
+            self.drag[1].y = 387
 
     def on_draw(self):
         arcade.start_render()
